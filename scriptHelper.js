@@ -28,7 +28,18 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+   list = document.querySelector("#faultyItems");
+   pilot = document.querySelector("input[name=pilotName]").value;
+   copilot = document.querySelector("input[name=copilotName]").value;
+   fuelLevel = document.querySelector("input[name=fuelLevel]").value;
+   cargoLevel = document.querySelector("input[name=cargoLevel]").value;
    
+   let pilotStatus = document.getElementById("piloStatus");
+   let copilotStatus = document.getElementById("copilotStatus");
+   let fuelStatus = document.getElementById("fuelStatus");
+   let cargoStatus = document.getElementById("cargoStatus");
+   let launchStatus = document.getElementById("launchStatus");
+   let liftOff = true;
 }
 
 async function myFetch() {
