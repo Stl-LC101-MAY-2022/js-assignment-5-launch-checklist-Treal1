@@ -1,56 +1,49 @@
 // Write your JavaScript code here!
 
-const { myFetch, pickPlanet, addDestinationInfo } = require("./scriptHelper");
-
 window.addEventListener("load", function() {
 
-    const document = window.document
-    let form = document.querySelector("form");
-    let pilot = document.querySelector("input[name=pilotName]");
-    let copilot = document.querySelector("input[name=copilotName]");
-    let fuelLevel = document.querySelector("input[name=fuelLevel]");
-    let cargoLevel = document.querySelector("input[name=cargoMass]");
-    const list = document.getElementById("faultyItems");
-    
-
-    list.style.visibility = "hidden";
-    
-    form.addEventListener("submit", function(event){   
-        
-        formSubmission(document, list, pilot.value, copilot.value, fuelLevel.value, cargoLevel.value);
-        
-        if (validateInput(pilot.value) == "Empty" || validateInput(copilot.value) == "Empty" || validateInput(fuelLevel.value) == "Empty" || validateInput(cargoLevel.value) == "Empty") {
-            list.style.visibility = "hidden"; 
-            alert("All fields are required!");
-            event.preventDefault();
-        } 
-        if (validateInput(pilot.value) == "Is a Number" || validateInput(copilot.value) == "Is a Number") {
-            list.style.visibility = "hidden"; 
-            alert("Pilot and CoPilot's names should be letters only.");
-            event.preventDefault();
-        }
-
-        if (validateInput(fuelLevel.value) == "Not a Number" || validateInput(cargoLevel.value) == "Not a Number") {
-            list.style.visibility = "hidden"; 
-            alert("Fuel Level and Cargo Mass should be numbers only.");
-            event.preventDefault();
-        }
-        event.preventDefault();
-    });
-    
-    
+    let document = window.document;
+    let faultyItems = document.getElementById("faultyItems");
+    faultyItems.style.visibility = 'hidden'
+ 
     let listedPlanets;
     // Set listedPlanetsResponse equal to the value returned by calling myFetch()
     let listedPlanetsResponse = myFetch();
+    console.log(listedPlanetsResponse);
     listedPlanetsResponse.then(function (result) {
         listedPlanets = result;
         console.log(listedPlanets);
     }).then(function () {
         console.log(listedPlanets);
         // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
-        let pickedPlanet = pickPlanet(listedPlanets)
-        // console.log(pickedPlanet)
-        addDestinationInfo(window.document, pickedPlanet.name, pickedPlanet.diameter, pickedPlanet.star, pickedPlanet.distance, pickedPlanet.moons, pickedPlanet.image);
-    })    
-
+        const missionTarget = pickPlanet(listedPlanets);
+        addDestinationInfo(
+            document,
+            missionTarget.name,
+            missionTarget.diameter,
+            missionTarget.star,
+            missionTarget.distance,
+            missionTarget.moons,
+            missionTarget.image
+        );
+        document.querySelector("form").addEventListener("submit", function(event) { 
+            let pilotName = document.querySelector("input[name=pilotName]");
+            let copilotName = document.querySelector("input[name=copilotName]");
+            let fuelLevel = document.querySelector("input[name=fuelLevel]");
+            let cargoMass = document.querySelector("input[name=cargoMass]");
+            console.log("!", pilotName.value);
+            console.log("!!", copilotName);
+            console.log("!!!", fuelLevel);
+            console.log("!!!!", cargoMass);
+            formSubmission(
+                document,
+                faultyItems,
+                pilotName.value,
+                copilotName.value,
+                fuelLevel.value,
+                cargoMass.value
+            );
+            event.preventDefault();
+        });
+    });
 });
