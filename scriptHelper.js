@@ -3,24 +3,24 @@ require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
-   /*
-               let
-            <h2>Mission Destination</h2>
-                <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
-                    <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
-                </ol>
-                <img src="">
-   */
-}
+   let missionInfo = `
+   <h2> Mission Destination</h2>
+       <ol>
+           <li>Name: ${name} </li>
+           <li>Diameter: ${diameter} </li>
+           <li>Star: ${star} </li>
+           <li>Distance from Earth: ${distance} </li>
+           <li>Number of Moons: ${moons} </li>
+       </ol>
+       <img src="${imageUrl}">
+`
+document.getElementById("missionTarget").innerHTML = missionInfo.
+};
 
 function validateInput(testInput) {
-    if (testInput === " ") {
+    if (testInput === "") {
         return "Empty";
-    } else if (isNaN(testInput)){
+    } else if (isNaN(testInput) === false){
         return "Not a number";
     } else {
         return "Is a number";
@@ -39,7 +39,8 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
    let fuelStatus = document.getElementById("fuelStatus");
    let cargoStatus = document.getElementById("cargoStatus");
    let launchStatus = document.getElementById("launchStatus");
-   let liftOff = true;
+//    let liftOff = true;
+   let h2 = document.getElementById("launchStatus");
 
    if(validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
     alert("All fields are required");
@@ -49,7 +50,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     alert("Values must contain letters.")    
     }
 
-    function weAreReady() {
+    function readyForLiftoff() {
         list.style.visibility = "visible";
         pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
         copilotStatus.innerHTML = `Copilot ${copilot} is ready for launch`;
@@ -78,14 +79,12 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     launchStatus.style.color = "red";
     weAreReady();
    }
-};
-}
 
 async function myFetch() {
     let planetsReturned;
 
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
-        return response.json
+        return response.json();
     });
     return planetsReturned;
 }

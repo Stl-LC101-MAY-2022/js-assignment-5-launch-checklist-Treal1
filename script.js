@@ -14,7 +14,7 @@ window.addEventListener("load", function() {
     formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel);
     event.preventDefault();
 
-   let listedPlanets;
+   let listedPlanets = myFetch;
    // Set listedPlanetsResponse equal to the value returned by calling myFetch()
    let listedPlanetsResponse = myFetch;
    listedPlanetsResponse.then(function (result) {
@@ -25,6 +25,5 @@ window.addEventListener("load", function() {
        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
        let otherWordly = pickPlanet(listedPlanets)
        addDestinationInfo(document, otherWordly.name, otherWorldly.diameter, otherWorldly.star, otherWorldly.distance, otherWorldly.moons, otherWorldly.image)
-   })
-   
+   }) 
 });
